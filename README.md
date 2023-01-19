@@ -3,10 +3,15 @@
 
 sh ./setup.sh
 After installing docker-compose run this. This sets up the container with a couple of questions.
+
 The required data is as follows.
+
 domain - domain, for example: example.com, default: server hostname 
+
 service - the service name for example: test-dokcer , default: current folder name
+
 network - docker network name, selectable
+
 host - full domain, for example: test-docker.example.com 
 
 sh ./init.sh
