@@ -1,9 +1,15 @@
+if [ ! -f .env ]; then
+    echo "run first setup.sh or create .env file"
+    exit
+fi
+service=$(grep service .env | awk -F "=" '{print $2}')
+
 if [ ! -f ./app/index.js ]; then
    
     docker-compose up -d
 
-    docker exec -it test-docker npm init -y
-    docker exec -it test-docker npm install express
+    docker exec -it $service npm init -y
+    docker exec -it $service npm install express
 
     touch ./app/index.js
 
@@ -13,7 +19,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello World from $service!');
 });
 
 app.listen(3000, () => {
