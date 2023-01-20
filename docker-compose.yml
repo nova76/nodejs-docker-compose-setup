@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+    node:
+        container_name: ${service}
+        env_file: .env   
+        build:
+            context: .
+            dockerfile: ./Dockerfile.node
+        logging:
+            options:
+                max-size: "1m"
+                max-file: "1"     
+        expose:
+            - 3000
+        # ports:
+        #      - "4000:4000"       
+        command: bash -c "npm i --silent && nodemon index.js; while true; do sleep 1; done"
+        init: true # pid != 1
+        volumes:
+            - ./app/:/usr/src/app/
+        environment:
+            VIRTUAL_HOST: ${host}
+            VIRTUAL_PORT: 3000             
+        networks:
+            - node_network
+
+networks:
+    node_network:
+        external: true
+        name: ${network}
